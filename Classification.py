@@ -57,8 +57,6 @@ print(f"Is this a curved sperm?: {is_curved}.")
 print(f"Probability it's a curved sperm: {probs[1].item():.6f}")
 
 
-
-
 """ Analizing in batches """
 
 filename = '/content/drive/MyDrive/Curvos_vs_Rectos/testing_tif.zip' # zip with tif images to analyze
