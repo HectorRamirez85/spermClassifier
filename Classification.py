@@ -44,6 +44,8 @@ spermClassifier = Path('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\sp
 path = Path('C:/Users/ramir/Google Drive/ML/Curvos_vs_Rectos/')
 learner = load_learner(path, 'spermClassifier_18May2021.pkl')
 
+load_learner('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\spermClassifier_18May2021.pkl')
+
 
 """ Load tif image example (one by one) """
 img = io.imread('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\43_Ch1.ome.tif') # load 8-bit tif image
