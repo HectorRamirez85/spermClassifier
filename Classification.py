@@ -39,8 +39,7 @@ def is_curved(x): return x[0] == 'c'
 """ Fix for the path to load the algorithm """
 plt = platform.system()
 if plt == 'Windows': pathlib.PosixPath = pathlib.WindowsPath
-if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+elif plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
 
 
 """ Load Deep Learning algorithm (in development)"""
@@ -72,7 +71,7 @@ counter=0
 with ZipFile(filename) as archive:
     for entry in archive.infolist():
         with archive.open(entry) as file:
-            print(archive.infolist())
+            # print(archive.infolist())
             counter+=1
             img = io.imread(file, plugin='tifffile')
             img = PILImage.create(img)
