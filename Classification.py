@@ -37,12 +37,13 @@ def is_curved(x): return x[0] == 'c'
 
 
 
-""" Load Deep Learning algorithm """
+""" Load Deep Learning algorithm (in development)"""
 
 spermClassifier = Path('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\spermClassifier_18May2021.pkl')
 
 path = Path('C:/Users/ramir/Google Drive/ML/Curvos_vs_Rectos/')
 learner = load_learner(path, 'spermClassifier_18May2021.pkl')
+learner = load_learner(spermClassifier)
 
 load_learner('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\spermClassifier_18May2021.pkl')
 
@@ -54,7 +55,7 @@ img.to_thumb(192)
 
 
 """ Calculate probabilities """
-is_curved,_,probs = learn.predict(img)
+is_curved,_,probs = learner.predict(img)
 print(f"Is this a curved sperm?: {is_curved}.")
 print(f"Probability it's a curved sperm: {probs[1].item():.6f}")
 
@@ -74,7 +75,7 @@ with ZipFile(filename) as archive:
             img = PILImage.create(img)
             filename_jpg =  file.name.replace('testing_tif/','') # folder name
             filename = filename_jpg.replace('.tif','') 
-            is_curved,_,probs = learn.predict(img) # analyze each image and calculate probabilities
+            is_curved,_,probs = learner.predict(img) # analyze each image and calculate probabilities
             array = [filename, filename_jpg, entry.file_size, img.width, img.height, curved_straight(is_curved), probs[1].item(), probs[0].item()]
             print(str(round(counter/len(archive.infolist())*100,2))+"%"+" completed ", array)
             rows_list.append(array)
