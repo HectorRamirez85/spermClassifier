@@ -36,7 +36,7 @@ def is_curved(x): return x[0] == 'c'
 
 
 
-""" Fix for learning the algorithm path """
+""" Fix for the path to load the algorithm """
 plt = platform.system()
 if plt == 'Windows': pathlib.PosixPath = pathlib.WindowsPath
 if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
