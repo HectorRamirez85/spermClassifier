@@ -11,7 +11,6 @@ Created on Sat Jun 19 23:15:06 2021
 # conda install pillow
 
 
-
 """ Import libraries """
 import fastbook
 from fastbook import *
@@ -25,6 +24,7 @@ import os
 import sys
 import pathlib 
 
+
 """ Functions """
 def curved_straight(boolean):
   if boolean == 'False':
@@ -33,7 +33,6 @@ def curved_straight(boolean):
     return("Curvos")
 
 def is_curved(x): return x[0] == 'c'
-
 
 
 """ Fix for the path to load the algorithm """
@@ -48,6 +47,7 @@ spermClassifier = Path('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\sp
 # spermClassifier = r'C:\Users\ramir\Google Drive\ML\Curvos_vs_Rectos\spermClassifier_18May2021.pkl'
 
 learner = load_learner(spermClassifier)
+
 
 """ Load tif image example (one by one) """
 img = io.imread('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\43_Ch1.ome.tif') # load 8-bit tif image
@@ -75,19 +75,18 @@ with ZipFile(filename) as archive:
             counter+=1
             img = io.imread(file, plugin='tifffile')
             img = PILImage.create(img)
-            filename_jpg =  file.name.replace('testing_tif/','') # folder name
-            filename = filename_jpg.replace('.tif','') 
+            filename_tif =  file.name.replace('testing_tif/','') # folder name
+            filename = filename_tif.replace('.tif','') 
             is_curved,_,probs = learner.predict(img) # analyze each image and calculate probabilities
-            array = [filename, filename_jpg, entry.file_size, img.width, img.height, curved_straight(is_curved), probs[1].item(), probs[0].item()]
+            array = [filename, filename_tif, entry.file_size, img.width, img.height, curved_straight(is_curved), probs[1].item(), probs[0].item()]
             print(str(round(counter/len(archive.infolist())*100,2))+"%"+" completed ", array)
             rows_list.append(array)
             if curved_straight(is_curved) == 'Curvos':
-               img.save(folder + 'testing_Curved_vs_Straights\\curved\\'+ str(round(probs[1].item()*100,1)) + '%_' + filename_jpg)
+               img.save(folder + 'testing_Curved_vs_Straights\\curved\\'+ str(round(probs[1].item()*100,1)) + '%_' + filename_tif)
             else: 
-               img.save(folder + 'testing_Curved_vs_Straights\\straight\\'+ str(round(probs[1].item()*100,1)) + '%_' + filename_jpg)
+               img.save(folder + 'testing_Curved_vs_Straights\\straight\\'+ str(round(probs[1].item()*100,1)) + '%_' + filename_tif)
 
 
 DF = pd.DataFrame(rows_list, columns=['image name','image', 'size (bytes)', 'width (px)', 'height (px)', 'Classification', 'Prob Curved', 'Prob Straight'])
 DF.to_csv(folder + 'testing_Curved_vs_Straights\\test_CSV.csv')   
-
 
