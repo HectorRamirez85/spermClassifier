@@ -19,10 +19,7 @@ from skimage import io as io
 from PIL import Image
 from zipfile import ZipFile
 import pandas as pd
-import os
-import sys
 import pathlib 
-from numpy import asarray
 
 
 """ Functions """
