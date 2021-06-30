@@ -23,8 +23,7 @@ from zipfile import ZipFile
 import pandas as pd
 import os
 import sys
- 
-
+import pathlib 
 
 """ Functions """
 def curved_straight(boolean):
@@ -37,16 +36,19 @@ def is_curved(x): return x[0] == 'c'
 
 
 
+""" Fix for learning the algorithm path """
+plt = platform.system()
+if plt == 'Windows': pathlib.PosixPath = pathlib.WindowsPath
+if plt == 'Linux': pathlib.WindowsPath = pathlib.PosixPath
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 """ Load Deep Learning algorithm (in development)"""
 
 spermClassifier = Path('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\spermClassifier_18May2021.pkl')
+# spermClassifier = r'C:\Users\ramir\Google Drive\ML\Curvos_vs_Rectos\spermClassifier_18May2021.pkl'
 
-path = Path('C:/Users/ramir/Google Drive/ML/Curvos_vs_Rectos/')
-learner = load_learner(path, 'spermClassifier_18May2021.pkl')
 learner = load_learner(spermClassifier)
-
-load_learner('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\spermClassifier_18May2021.pkl')
-
 
 """ Load tif image example (one by one) """
 img = io.imread('C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\43_Ch1.ome.tif') # load 8-bit tif image
@@ -62,7 +64,8 @@ print(f"Probability it's a curved sperm: {probs[1].item():.6f}")
 
 """ Analizing in batches """
 
-filename = '/content/drive/MyDrive/Curvos_vs_Rectos/testing_tif.zip' # zip with tif images to analyze
+folder = 'C:\\Users\\ramir\\Google Drive\\ML\\Curvos_vs_Rectos\\'
+filename = folder + 'testing_tif.zip' # zip with tif images to analyze
 
 rows_list = []
 counter=0
@@ -80,12 +83,12 @@ with ZipFile(filename) as archive:
             print(str(round(counter/len(archive.infolist())*100,2))+"%"+" completed ", array)
             rows_list.append(array)
             if curved_straight(is_curved) == 'Curvos':
-               img.save('/content/drive/MyDrive/Curvos_vs_Rectos/testing_Curved_vs_Straights/curved/'+ str(round(probs[1].item()*100,1)) + '%_' + filename_jpg)
+               img.save(folder + 'testing_Curved_vs_Straights\\curved\\'+ str(round(probs[1].item()*100,1)) + '%_' + filename_jpg)
             else: 
-               img.save('/content/drive/MyDrive/Curvos_vs_Rectos/testing_Curved_vs_Straights/straight/'+ str(round(probs[1].item()*100,1)) + '%_' + filename_jpg)
+               img.save(folder + 'testing_Curved_vs_Straights\\straight\\'+ str(round(probs[1].item()*100,1)) + '%_' + filename_jpg)
 
 
 DF = pd.DataFrame(rows_list, columns=['image name','image', 'size (bytes)', 'width (px)', 'height (px)', 'Classification', 'Prob Curved', 'Prob Straight'])
-DF.to_csv('/content/drive/MyDrive/Curvos_vs_Rectos/testing_Curved_vs_Straights/test_CSV.csv')   
+DF.to_csv(folder + 'testing_Curved_vs_Straights\\test_CSV.csv')   
 
 
