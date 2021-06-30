@@ -8,8 +8,7 @@ Created on Sat Jun 19 23:15:06 2021
 """ Uncomment and install for the 1st time then comment it """
 # conda install -c fastai fastai
 # conda install -c fastai fastbook
-# conda install pillow
-
+# conda install -U pillow
 
 """ Import libraries """
 import fastbook
@@ -23,6 +22,7 @@ import pandas as pd
 import os
 import sys
 import pathlib 
+from numpy import asarray
 
 
 """ Functions """
